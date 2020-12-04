@@ -42,7 +42,7 @@ function partition(array, left, right, animations) {
     }
     while (array[j] > pivot) {
       animations.push([j, pivotIndex, false]);
-      animations.push([i, pivotIndex, false]);
+      animations.push([j, pivotIndex, false]);
       j--;
     }
     if (i <= j) {

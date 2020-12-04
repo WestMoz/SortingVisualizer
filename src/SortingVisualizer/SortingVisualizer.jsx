@@ -5,15 +5,12 @@ import {
   getMergeSortAnimations,
   heapSortTest,
 } from '../sortingAlgorithms/sortingAlgorithms';
-import {
-  quickSortTest,
-  getQuickSortAnimations,
-} from '../sortingAlgorithms/quickSort';
+import { getQuickSortAnimations } from '../sortingAlgorithms/quickSort';
 import './SortingVisualizer.css';
 
-const ANIMATION_SPEED = 200;
+const ANIMATION_SPEED = 20;
 
-const LENGTH_OF_ARRAY = 20;
+const LENGTH_OF_ARRAY = 100;
 
 const PRIMARY_COLOR = 'lightblue';
 
@@ -112,9 +109,9 @@ export default class SortingVisualizer extends React.Component {
     console.log(animations);
     for (let i = 0; i < animations.length; i++) {
       const arrayBars = document.getElementsByClassName('array-bar');
-
-      const [barOneIndex, barTwoIndex, swap] = animations[i];
       const color = i % 2 === 0 ? SECONDARY_COLOR : PRIMARY_COLOR;
+      const [barOneIndex, barTwoIndex, swap] = animations[i];
+
       const barOneStyle = arrayBars[barOneIndex].style;
       const barTwoStyle = arrayBars[barTwoIndex].style;
       if (swap) {
