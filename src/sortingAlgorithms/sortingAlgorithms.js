@@ -1,3 +1,67 @@
+export function heapSortTest(inputArray) {
+  let arrayLength;
+  let array = inputArray;
+  function getHeapRoot(input, i) {
+    let left = 2 * i + 1;
+    let right = 2 * i + 2;
+    let max = i;
+
+    if (left < arrayLength && input[left] > input[max]) {
+      max = left;
+    }
+
+    if (right < arrayLength && input[right] > input[max]) {
+      max = right;
+    }
+
+    if (max !== 1) {
+      swap(input, i, max);
+      getHeapRoot(input, max);
+    }
+  }
+  function swap(input, indexA, indexB) {
+    let temp = input[indexA];
+
+    input[indexA] = input[indexB];
+    input[indexB] = temp;
+  }
+
+  function heapSort() {
+    arrayLength = array.length;
+
+    for (let i = Math.floor(arrayLength / 2); i >= 0; i -= 1) {
+      getHeapRoot(array, i);
+    }
+
+    for (let i = array.length - 1; i > 0; i--) {
+      swap(array, 0, i);
+      arrayLength--;
+      getHeapRoot(array, 0);
+    }
+  }
+  return heapSort(array);
+}
+
+export function quickSortTest(array) {
+  if (array.length < 2) {
+    return array;
+  }
+
+  let pivot = array[0];
+  let lesserArray = [];
+  let greaterArray = [];
+
+  for (let i = 0; i < array.length; i++) {
+    if (array[i] > pivot) {
+      greaterArray.push(array[i]);
+    } else {
+      lesserArray.push(array[i]);
+    }
+  }
+
+  return quickSortTest(lesserArray).concat(pivot, quickSortTest(greaterArray));
+}
+
 export function getBubbleSortAnimations(array) {
   const animations = [];
   const swaps = [];
@@ -28,64 +92,6 @@ function bubbleSortHelper(array, animations, swaps) {
     }
   }
 }
-
-//WORKING SLIGHTLY
-// function bubbleSortHelper(array, animations, swaps) {
-//   let length = array.length;
-//   for (let i = 0; i < length; i++) {
-//     for (let j = 0; j < length - i - 1; j++) {
-//       animations.push([j, j + 1]);
-//       swaps.push(false);
-//       if (array[j] > array[j + 1]) {
-//         let temp = array[j];
-//         array[j] = array[j + 1];
-//         array[j + 1] = temp;
-//         swaps.push(true);
-//       } //if value is greater than next value swap values
-//       else {
-//         swaps.push(false);
-//       }
-//       animations.push([j, j + 1]);
-//     }
-//   }
-// }
-
-// function bubbleSortHelper(array, animations, swaps) {
-//   let length = array.length;
-//   for (let i = 0; i < length; i++) {
-//     for (let j = 0; j < length - 1; j++) {
-//       animations.push([j, j + 1]);
-//       swaps.push(false);
-//       if (array[j] > array[j + 1]) {
-//         let temp = array[j];
-//         array[j] = array[j + 1];
-//         array[j + 1] = temp;
-//         swaps.push(true);
-//       } //if value is greater than next value swap values
-//       else {
-//         swaps.push(false);
-//       }
-//       animations.push([j, j + 1]);
-//     }
-//   }
-// }
-
-// function bubbleSortHelper(array, animations) {
-//   let length = array.length;
-//   for (let i = 0; i < length; i++) {
-//     for (let j = i; j < length; j++) {
-//       //changes color
-//       animations.push([i, j]);
-//       if (array[i] > array[j]) {
-//         let temp = array[i];
-//         array[i] = array[j];
-//         array[j] = temp;
-//       }
-//       //reverts color
-//       animations.push([i, j]);
-//     }
-//   }
-// }
 
 export function getMergeSortAnimations(array) {
   const animations = [];
@@ -186,3 +192,61 @@ function doMerge(
 //   while (j < secondHalf.length) sortedArray.push(secondHalf[j++]);
 //   return sortedArray;
 // };
+
+//WORKING SLIGHTLY
+// function bubbleSortHelper(array, animations, swaps) {
+//   let length = array.length;
+//   for (let i = 0; i < length; i++) {
+//     for (let j = 0; j < length - i - 1; j++) {
+//       animations.push([j, j + 1]);
+//       swaps.push(false);
+//       if (array[j] > array[j + 1]) {
+//         let temp = array[j];
+//         array[j] = array[j + 1];
+//         array[j + 1] = temp;
+//         swaps.push(true);
+//       } //if value is greater than next value swap values
+//       else {
+//         swaps.push(false);
+//       }
+//       animations.push([j, j + 1]);
+//     }
+//   }
+// }
+
+// function bubbleSortHelper(array, animations, swaps) {
+//   let length = array.length;
+//   for (let i = 0; i < length; i++) {
+//     for (let j = 0; j < length - 1; j++) {
+//       animations.push([j, j + 1]);
+//       swaps.push(false);
+//       if (array[j] > array[j + 1]) {
+//         let temp = array[j];
+//         array[j] = array[j + 1];
+//         array[j + 1] = temp;
+//         swaps.push(true);
+//       } //if value is greater than next value swap values
+//       else {
+//         swaps.push(false);
+//       }
+//       animations.push([j, j + 1]);
+//     }
+//   }
+// }
+
+// function bubbleSortHelper(array, animations) {
+//   let length = array.length;
+//   for (let i = 0; i < length; i++) {
+//     for (let j = i; j < length; j++) {
+//       //changes color
+//       animations.push([i, j]);
+//       if (array[i] > array[j]) {
+//         let temp = array[i];
+//         array[i] = array[j];
+//         array[j] = temp;
+//       }
+//       //reverts color
+//       animations.push([i, j]);
+//     }
+//   }
+// }

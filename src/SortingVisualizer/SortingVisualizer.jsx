@@ -3,10 +3,15 @@ import React from 'react';
 import {
   getBubbleSortAnimations,
   getMergeSortAnimations,
+  heapSortTest,
 } from '../sortingAlgorithms/sortingAlgorithms';
+import {
+  quickSortTest,
+  getQuickSortAnimations,
+} from '../sortingAlgorithms/quickSort';
 import './SortingVisualizer.css';
 
-const ANIMATION_SPEED = 40;
+const ANIMATION_SPEED = 200;
 
 const LENGTH_OF_ARRAY = 20;
 
@@ -98,6 +103,39 @@ export default class SortingVisualizer extends React.Component {
     }
   }
 
+  quickSort() {
+    console.log(this.state.array);
+    // console.log(
+    //   quickSortTest(this.state.array, 0, this.state.array.length - 1),
+    // );
+    const animations = getQuickSortAnimations(this.state.array);
+    console.log(animations);
+    for (let i = 0; i < animations.length; i++) {
+      const arrayBars = document.getElementsByClassName('array-bar');
+
+      const [barOneIndex, barTwoIndex, swap] = animations[i];
+      const color = i % 2 === 0 ? SECONDARY_COLOR : PRIMARY_COLOR;
+      const barOneStyle = arrayBars[barOneIndex].style;
+      const barTwoStyle = arrayBars[barTwoIndex].style;
+      if (swap) {
+        console.log('swapping items');
+
+        setTimeout(() => {
+          const barOneHeight = barOneStyle.height;
+          barOneStyle.height = barTwoStyle.height;
+          barTwoStyle.height = barOneHeight;
+          barOneStyle.backgroundColor = color;
+          barTwoStyle.backgroundColor = color;
+        }, i * ANIMATION_SPEED);
+      } else {
+        setTimeout(() => {
+          barOneStyle.backgroundColor = color;
+          barTwoStyle.backgroundColor = color;
+        }, i * ANIMATION_SPEED);
+      }
+    }
+  }
+
   // bubbleSort() {
   //   const animations = getBubbleSortAnimations(this.state.array);
   //   console.log(animations);
@@ -134,9 +172,10 @@ export default class SortingVisualizer extends React.Component {
   //   }
   // }
 
-  quickSort() {}
-
-  heapSort() {}
+  heapSort() {
+    console.log(this.state.array);
+    console.log(heapSortTest(this.state.array));
+  }
 
   testSortingAlgorithms() {
     for (let i = 0; i < 100; i++) {
