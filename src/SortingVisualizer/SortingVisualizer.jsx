@@ -3,7 +3,6 @@ import React from 'react';
 import {
   getBubbleSortAnimations,
   getMergeSortAnimations,
-  heapSortTest,
 } from '../sortingAlgorithms/sortingAlgorithms';
 import { getQuickSortAnimations } from '../sortingAlgorithms/quickSort';
 import { getHeapSortAnimations } from '../sortingAlgorithms/heapSort';
@@ -16,6 +15,8 @@ const LENGTH_OF_ARRAY = 20;
 const PRIMARY_COLOR = 'lightblue';
 
 const SECONDARY_COLOR = 'purple';
+
+const SORTED_COLOR = 'green';
 
 export default class SortingVisualizer extends React.Component {
   constructor(props) {
@@ -82,6 +83,10 @@ export default class SortingVisualizer extends React.Component {
       const [barOneIndex, barTwoIndex, swap] = animations[i];
       const barOneStyle = arrayBars[barOneIndex].style;
       const barTwoStyle = arrayBars[barTwoIndex].style;
+      // if (this.state.array[barTwoIndex] + 'px' === barTwoStyle.height) {
+      //   console.log('entered sorted if');
+      //   barTwoStyle.backgroundColor = SORTED_COLOR;
+      // }
       if (swap) {
         console.log('swapping');
 
@@ -91,11 +96,20 @@ export default class SortingVisualizer extends React.Component {
           barTwoStyle.height = barOneHeight;
           barOneStyle.backgroundColor = color;
           barTwoStyle.backgroundColor = color;
+          if (this.state.array[barTwoIndex] + 'px' === barTwoStyle.height) {
+            barTwoStyle.backgroundColor = SORTED_COLOR;
+          }
         }, i * ANIMATION_SPEED);
       } else {
         setTimeout(() => {
           barOneStyle.backgroundColor = color;
           barTwoStyle.backgroundColor = color;
+          if (this.state.array[barTwoIndex] + 'px' === barTwoStyle.height) {
+            barTwoStyle.backgroundColor = SORTED_COLOR;
+          }
+          if (this.state.array[barOneIndex] + 'px' === barOneStyle.height) {
+            barOneStyle.backgroundColor = SORTED_COLOR;
+          }
         }, i * ANIMATION_SPEED);
       }
     }
@@ -231,13 +245,11 @@ export default class SortingVisualizer extends React.Component {
           ))}
         </div>
         <div className="button-container">
-          <button onClick={() => this.resetArray()}>
-            Generate New Array *W*
-          </button>
-          <button onClick={() => this.mergeSort()}>Merge Sort *W*</button>
-          <button onClick={() => this.quickSort()}>Quick Sort *W*</button>
+          <button onClick={() => this.resetArray()}>Generate New Array</button>
+          <button onClick={() => this.mergeSort()}>Merge Sort</button>
+          <button onClick={() => this.quickSort()}>Quick Sort</button>
           <button onClick={() => this.heapSort()}>Heap Sort</button>
-          <button onClick={() => this.bubbleSort()}>Bubble Sort *W* </button>
+          <button onClick={() => this.bubbleSort()}>Bubble Sort</button>
         </div>
       </div>
     );
